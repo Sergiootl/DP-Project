@@ -1,74 +1,61 @@
-Project: DP TENNIS
-Aothors: Sergio Terrazas Lobato e Ismael Acedo Acedo
+# 🎾 DP TENNIS: Simulación de Campeonato con Patrones de Diseño (Java)
 
-Objeto del proyecto:
+**Autores:** Sergio Terrazas Lobato e Ismael Acedo Acedo
 
-	Para esta primera parte del trabajo, los profesores nos dicen que tenemos que hacer un torneo de tenis.
-	Para ello, se nos dice que debemos dar de alta a los participantes, eliminar a los que han perdido.
-	La puntuación obtenida por cada participante dependerá del tipo de zapato que se utilice y su habilidad.
+Este proyecto implementa un motor de simulación para un torneo de tenis basado en el **Diseño Orientado a Objetos (POO) avanzado** y la aplicación de **Patrones de Diseño** para garantizar la modularidad, la escalabilidad y el bajo acoplamiento.
 
-Tenemos que hacer lo siguiente para ejecutar el proyecto:
+El objetivo principal es simular un torneo de eliminación directa donde la puntuación y el rendimiento de los participantes dependen de su habilidad base y el tipo de equipamiento (zapatillas, raquetas).
 
-	La ejecución se realiza desde la clase principal definida en el proyecto,
-	que invoca una instancia de la clase INIT para cargar el
-	datos y posteriormente la llamada al método Torneo de la clase Campeonato,
-	que es donde se define la ejecución del proyecto:
+---
 
---------------------------------------------------------------------------------------------------------------------------------------------	
+## 1. Arquitectura de Software y Patrones de Diseño
 
-EXTRAS:
-	----------------------------------------------------------------------------------------------------------------------------
-	PRIMERA ENTREGA:
+El diseño está optimizado para el **bajo acoplamiento** y la **modularidad**, con una aplicación estricta de Patrones de Diseño GoF.
 
-		De la primera entrega, añadimos a nuestro proyecto los Comparator :
+### 1.1. Patrones de Diseño
 
-		-PotenciaComparator
+| Patrón | Clases Involucradas | Propósito |
+| :--- | :--- | :--- |
+| **OBSERVER** | `MedioDeportivo`, `MedioGeneralista`, `MedioSensacionalista` | Utilizado para notificar los resultados de los partidos a los distintos **medios de comunicación** de forma desacoplada. |
+| **SINGLETON** | `Campeonato` | Garantiza una única instancia central del torneo para controlar el estado y los recursos. |
 
-			*Utilizamos un comparator para las potencias de las raquetas
+### 1.2. Diseño POO Avanzado
 
-		-EliminadosComparator
+* **Polimorfismo por Herencia:** La clase base `Tenista` se extiende a subtipos (`Golpeadores`, `Voleadores`) que sobrescriben el método de puntuación (`golpear()`) para aplicar una lógica de juego especializada.
+* **Lógica Modular con Enums:** Se utilizan **Enums con estado** (`EstiloEncordado`) para encapsular los factores de modificación de atributos (multiplicadores de Potencia/Control), separando la lógica de negocio de las clases principales.
+* **JUnit:** Se implementó **testing unitario** en clases clave (`Zapatillas`, `RaquetaGenerica`) para validar la robustez de las reglas del juego.
 
-			*Utilizamos un comparator para la posicion en las que fueron eliminados unos tenistas
+---
 
-		-NameComparator
+## 2. Estructuras de Datos y Algoritmos
 
-			*Utilizamos un comparator para que el campeonato no realiazse mas rondas si el nombte de t1 y t2 es el mismo y diga que ese tenista es el ganador
+La gestión de colecciones y el flujo de la simulación demuestran un manejo avanzado de las estructuras de datos de Java.
 
-		-PointComparator
+### 2.1. Comparadores y Asignación de Recursos
 
-			*Utilizamos un comparator para los puntos de t1 y t2 y saber quien ha ganado dicha ronda
-	
-	----------------------------------------------------------------------------------------------------------------------------
-	SEGUNDA ENTREGA:
+Se utilizan múltiples `Comparator` para optimizar el control de flujo y la gestión de recursos:
 
-		De la segunda entrega añadimos a nuestro proyecto:
+| Comparator | Propósito | Aplicación |
+| :--- | :--- | :--- |
+| **`PotenciaComparator`** | Priorización de recursos | Ordena las **raquetas** (asumiendo su uso con `TreeSet`) para la asignación prioritaria a los tenistas. |
+| **`EliminadosComparator`** | Ordenamiento de salida | Clasifica a los tenistas eliminados por la posición en la que salieron del torneo. |
+| **`PointComparator`** | Lógica de partido | Determina el **ganador** de una ronda comparando los puntos acumulados. |
 
-		- Iterator:
+### 2.2. Flujo de Ejecución
 
-			*Se usa en la clase campeonato en la asignación de raquetas a tenistas, ya que al utilizar TreeSet facilita su uso.
-		- Enum:
+1.  **Carga de Datos:** La clase `Init` carga los tenistas, zapatillas y raquetas.
+2.  **Inicialización:** El método `Torneo` de la clase `Campeonato` gestiona el flujo de eliminación.
+3.  **Asignación de Raquetas:** Se utiliza el patrón **Iterator** en la clase `Campeonato` para recorrer y asignar las raquetas ordenadas por potencia.
+4.  **Output:** Se genera un **fichero de texto de salida** para registrar todos los eventos del campeonato.
 
-			*Se define la clase EstiloEncordado, donde se definen los tipos de encordado de cada raqueta.
+---
 
-		-JUnit:
+## 3. Archivos Clave del Proyecto
 
-			*Utilizamos el JUnit para realizar pruebas a las clases Zapatillas,Tenistas(definido pero no funcional) y RaquetaGenerica.
-
-		-GitHub
-			
-			*Utilizamos GitHub para realizar un repositorio cada vez que realizamos una modificacion
-
-	----------------------------------------------------------------------------------------------------------------------------
-	TERCERA ENTREGA:
-
-		De la tercera entrega añadimos a nuestro proyecto:
-
-		-MEDIOS DE COMUNICACION:
-			
-			*Utilizamos un patron de diseño OBSERVER para realizar esta implementacion
-
-		-FICHERO DE TEXTO
-
-			*Utilizamos un fichero de texto de salida para mostrar los datos del campeonato
-
-			
+| Archivo | Rol en el Sistema | Concepto Principal |
+| :--- | :--- | :--- |
+| **`Campeonato.java`** | Motor de Simulación | Singleton / Sujeto (Observer) |
+| **`Medio*.java`** | Observadores | Patrón Observer |
+| **`PotenciaComparator.java`** | Lógica de ordenación | Gestión de Colecciones Avanzada |
+| **`Tenista.java`** | Clase Base de Jugadores | Herencia / Polimorfismo |
+| **`EstiloEncordado.java`** | Multiplicadores de Stats | Enum con Estado |
