@@ -1,16 +1,16 @@
-# 🎾 DP TENNIS: Simulación de Campeonato con Patrones de Diseño (Java)
+# 🎾 DP TENNIS: Simulador de Campeonato con Patrones de Diseño (Java)
 
 **Autores:** Sergio Terrazas Lobato e Ismael Acedo Acedo
 
-Este proyecto implementa un motor de simulación para un torneo de tenis basado en el **Diseño Orientado a Objetos (POO) avanzado** y la aplicación de **Patrones de Diseño** para garantizar la modularidad, la escalabilidad y el bajo acoplamiento.
+Este proyecto implementa un motor de simulación para un torneo de tenis basado en **POO avanzado** y la aplicación de **Patrones de Diseño** para garantizar la modularidad, la escalabilidad y el bajo acoplamiento.
 
-El objetivo principal es simular un torneo de eliminación directa donde la puntuación y el rendimiento de los participantes dependen de su habilidad base y el tipo de equipamiento (zapatillas, raquetas).
+El objetivo es simular un torneo de eliminación directa donde el rendimiento depende de la habilidad base y el equipamiento.
 
 ---
 
 ## 🚀 1. Arquitectura de Software y Patrones de Diseño
 
-El diseño está optimizado para el **bajo acoplamiento** y la **modularidad**, usando patrones clave de diseño.
+El diseño se optimiza para la **modularidad** y el **bajo acoplamiento**, utilizando Patrones de Diseño clave.
 
 ### Patrones de Diseño (GoF)
 
@@ -22,7 +22,7 @@ El diseño está optimizado para el **bajo acoplamiento** y la **modularidad**, 
 ### Diseño POO Avanzado 💡
 
 * **Polimorfismo por Herencia:** La clase `Tenista` se extiende a subtipos como **`Golpeadores`** y **`Voleadores`**. Cada uno sobrescribe el método de puntuación (`golpear()`) para aplicar su **lógica de juego especializada**.
-* **Lógica Modular con Enums:** Se utiliza el **Enum con estado** (`EstiloEncordado`) para encapsular los **multiplicadores** de Potencia/Control del equipamiento, manteniendo el código limpio.
+* **Lógica Modular con Enums:** Se utiliza el **Enum con estado** (`EstiloEncordado`) para encapsular los **multiplicadores** de Potencia/Control del equipamiento, manteniendo la lógica de negocio flexible.
 * **JUnit:** Implementación de **testing unitario** en clases clave (`Zapatillas`, `RaquetaGenerica`) para validar la robustez de las reglas del juego.
 
 ---
@@ -33,8 +33,8 @@ La gestión de colecciones se realiza con criterios específicos para optimizar 
 
 ### Asignación de Recursos por Prioridad
 
-* **`PotenciaComparator`** y **`Iterator`**: Se utiliza un `Comparator` para ordenar las **raquetas** por potencia (asumiendo su uso con `TreeSet`), lo que permite el uso de un **Iterator** en la clase `Campeonato` para asignar de manera eficiente los mejores recursos a los tenistas de mayor prioridad.
-* **`EliminadosComparator` y `PointComparator`**: Comparadores específicos que definen los criterios de ordenación de los tenistas eliminados y la lógica de victoria en cada partido.
+* **`PotenciaComparator`** y **`Iterator`**: Se utiliza un `Comparator` para ordenar las **raquetas** por potencia (asumiendo su uso con `TreeSet`), lo que permite el uso de un **Iterator** en la clase `Campeonato` para asignar de manera eficiente los mejores recursos a los tenistas.
+* **Comparadores Específicos**: Se usan `EliminadosComparator`, `PointComparator` y `NameComparator` para controlar el flujo del torneo y los criterios de victoria.
 
 ### Flujo de Ejecución
 
@@ -49,7 +49,7 @@ La gestión de colecciones se realiza con criterios específicos para optimizar 
 | Archivo | Rol en el Sistema | Concepto Principal |
 | :--- | :--- | :--- |
 | **`Campeonato.java`** | Motor de Simulación Central | Singleton / Sujeto (Observer) |
-| **`Medio*.java`** | Clases de *Reporting* | Patrón Observer (Tercera Entrega) |
+| **`Medio*.java`** | Clases de *Reporting* | Patrón Observer |
 | **`PotenciaComparator.java`** | Lógica de ordenación | Gestión de Colecciones Avanzada |
 | **`Tenista.java`** | Clase Base de Jugadores | Herencia / Polimorfismo |
-| **`EstiloEncordado.java`** | Multiplicadores de Stats | Enum con Estado (Segunda Entrega) |
+| **`EstiloEncordado.java`** | Multiplicadores de Stats | Enum con Estado |
